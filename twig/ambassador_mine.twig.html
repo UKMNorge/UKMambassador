@@ -15,6 +15,14 @@
 		{% endif %}
 		<input type="submit" value="Invitér" />
 	</form>
+	
+	{% if invites %}
+		<h2>Status invitasjon</h2>
+		Du forsøkte å invitere {{invites|length}} personer, og status er følgende:
+		{% for invite in invites %}
+			<strong>{{invite.phone}}:</strong> {% if invite.success %}Invitasjon sendt!{% else %}ERROR: {{invite.message}}{% endif %}<br />
+		{% endfor %}
+	{% endif %}
 
 	<h3>Hva skjer?</h3>
 	<h4>Når du inviterer ambassadører vil de motta følgende SMS:</h4>

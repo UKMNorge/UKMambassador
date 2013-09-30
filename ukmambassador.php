@@ -24,6 +24,11 @@ function UKMambassador_menu() {
 }
 
 function UKMambassador() {
+	if($_SERVER['REQUEST_METHOD']==='POST') {
+		$send_status = UKMambassador_invite();
+	} else
+		$send_status = false;
+		
 	require_once('UKM/monstring.class.php');
 	$pl = new monstring(get_option('pl_id'));
 	
@@ -49,8 +54,27 @@ function UKMambassador() {
 	
 	$infos = array('site_type' => get_option('site_type'),
 				   'ambassadorer' => $pl->ambassadorer(),
-				   'monstringer' => $options);
+				   'monstringer' => $options,
+				   'invites' => $send_status);
 	echo TWIG('ambassador_mine.twig.html', $infos , dirname(__FILE__));
+}
+
+function UKMambassador_invite() {
+	$invites = explode(',', $_POST['ambassadorinvite']);
+	$send_status = array();
+	
+	if(isset($_POST['pl_invite_id']))
+		$plid = $_POST['pl_invite_id'];
+	else
+		$plid = get_option('pl_id');
+	
+	require_once('UKM/ambassador.class.php');
+	$ambassador = new ambassador(false);
+	
+	for($i=0; $i<sizeof($invites); $i++) {
+		$send_status[] = $ambassador->invite($invites[$i], $plid);
+	}
+	return $send_status;
 }
 
 function UKMWambassador_scriptsandstyles() {
