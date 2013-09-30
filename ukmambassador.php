@@ -20,7 +20,7 @@ if(is_admin()) {
 }
 
 function UKMambassador_menu() {
-	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/cloud-menu.png',197);
+	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/ambasssador-menu.png',197);
 }
 
 function UKMambassador() {
