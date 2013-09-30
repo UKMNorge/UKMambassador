@@ -22,5 +22,8 @@ function UKMambassador_menu() {
 }
 
 function UKMambassador() {
-	echo TWIG('ambassador_mine.twig.html', array() , dirname(__FILE__));
+	$pl = new place(get_option('pl_id'));
+	$infos = array('site_type' => get_option('site_type'),
+				   'ambassadorer' => $pl->ambassadorer());
+	echo TWIG('ambassador_mine.twig.html', $infos , dirname(__FILE__));
 }
