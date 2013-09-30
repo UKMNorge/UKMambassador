@@ -1,9 +1,31 @@
+<div style="float: right; width: 300px;">
+	<h2>Inviter noen til å bli ambassadør</h2>
+	Skriv inn ett mobilnummer, eller en liste kommaseparerte mobilnummer for å invitere ambassadør(er).
+	<form action="" method="POST">
+		<input type="hidden" name="tab" value="ambassadorer" />
+		<input type="text" name="ambassadorinvite" id="ambassadorinvite" />
+		$options
+		<input type="submit" value="Invitér" />
+	</form>
+
+	<h4>Send SMS-invitasjon til ambassadør(er)</h4>
+	$res
+	<hr />
+	<h4>Når du inviterer ambassadører vil de motta følgende SMS:</h4>
+	Hei! Vi håper at du vil bli ambassadør for UKM. Du gjør så mye eller lite du vil :) Svar UKM AMB for å motta mer informasjon! Hilsen UKM
+	<hr />
+	<h4>De som svarer UKM AMB vil motta følgende SMS:</h4>
+	En UKM-ambassadør forteller andre om UKM, og bidrar til at flere melder seg på. Du får en gratis T-skjorte og noen tips fra oss, men det viktigste verktøyet er deg selv og dine erfaringer! Det er ingen forpliktelser, men om du gjør en god jobb kan du vinne både 1000 kr og en gratistur til UKM-festivalen. 
+	Registrer deg på: http://ukm.no/ambassador så er du i gang!
+</div>
+
 <h3>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h3>	
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
-		<th align="left">Navn</th>
-		<th align="left">Mobil</th>
-		<th align="left">Sesong</th>
+		<th>&nbsp;</th>
+		<th>Navn</th>
+		<th>Mobil</th>
+		<th>Sesong</th>
 		{% if site_type != "kommune" %}
 		<th align="left">Tilknyttet mønstring</th>
 		{% endif %}
