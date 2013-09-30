@@ -1,12 +1,13 @@
 <h3>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h3>	
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
-		<th>Navn</th>
-		<th>Mobil</th>
-		<th>Sesong</th>
+		<th align="left">Navn</th>
+		<th align="left">Mobil</th>
+		<th align="left">Sesong</th>
 		{% if site_type != "kommune" %}
-		<th>Tilknyttet mønstring</th>
+		<th align="left">Tilknyttet mønstring</th>
 		{% endif %}
+	</tr>
 	{% for ambassador in ambassadorer %}	
 	<tr>
 		<td><a href="{{ambassador.link}}" target="_blank">
