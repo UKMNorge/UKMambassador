@@ -14,11 +14,11 @@ require_once('UKM/inc/twig-admin.inc.php');
 if(is_admin()) {
 	global $blog_id;
 	if($blog_id != 1)
-		add_action('admin_menu', 'UKMinstrato_menu',100);
+		add_action('admin_menu', 'UKMambassador_menu');
 }
 
-function UKMinstrato_menu() {
-	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/cloud-menu.png',198);
+function UKMambassador_menu() {
+	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/cloud-menu.png',197);
 }
 
 function UKMambassador() {
