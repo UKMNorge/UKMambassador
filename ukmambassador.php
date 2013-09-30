@@ -22,7 +22,8 @@ function UKMambassador_menu() {
 }
 
 function UKMambassador() {
-	$pl = new place(get_option('pl_id'));
+	require_once('UKM/monstring.class.php');
+	$pl = new monstring(get_option('pl_id'));
 	$infos = array('site_type' => get_option('site_type'),
 				   'ambassadorer' => $pl->ambassadorer());
 	echo TWIG('ambassador_mine.twig.html', $infos , dirname(__FILE__));
