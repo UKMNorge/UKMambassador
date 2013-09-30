@@ -16,14 +16,6 @@
 		<input type="submit" value="Invitér" />
 	</form>
 	
-	{% if invites %}
-		<h2>Status invitasjon</h2>
-		Du forsøkte å invitere {{invites|length}} personer, og status er følgende:
-		{% for invite in invites %}
-			<strong>{{invite.phone}}:</strong> {% if invite.success %}Invitasjon sendt!{% else %}ERROR: {{invite.message}}{% endif %}<br />
-		{% endfor %}
-	{% endif %}
-
 	<h3>Hva skjer?</h3>
 	<h4>Når du inviterer ambassadører vil de motta følgende SMS:</h4>
 	Hei! Vi håper at du vil bli ambassadør for UKM. Du gjør så mye eller lite du vil :) Svar UKM AMB for å motta mer informasjon! Hilsen UKM
@@ -34,12 +26,21 @@
 </div>
 
 <h2>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h2>	
+
+{% if invites %}
+	<h2>Status invitasjon</h2>
+	Du forsøkte å invitere {{invites|length}} personer, og status er følgende:<br />
+	{% for invite in invites %}
+		<strong>{{invite.phone}}:</strong> {% if invite.success %}Invitasjon sendt!{% else %}ERROR: {{invite.message}}{% endif %}<br />
+	{% endfor %}
+{% endif %}
+
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
-		<th>&nbsp;</th>
-		<th>Navn</th>
-		<th>Mobil</th>
-		<th>Sesong</th>
+		<th align="left">&nbsp;</th>
+		<th align="left">Navn</th>
+		<th align="left">Mobil</th>
+		<th align="left">Sesong</th>
 		{% if site_type != "kommune" %}
 		<th align="left">Tilknyttet mønstring</th>
 		{% endif %}
