@@ -27,30 +27,29 @@ function UKMambassador() {
 	require_once('UKM/monstring.class.php');
 	$pl = new monstring(get_option('pl_id'));
 	
-				if(get_option('site_type')=='fylke') {
-				$monstringer = new SQL("SELECT `pl`.`pl_id`, `pl_name` FROM `smartukm_place` AS `pl`
-										JOIN `smartukm_rel_pl_k` AS `rel` ON (`rel`.`pl_id` = `pl`.`pl_id`)
-										JOIN `smartukm_kommune` AS `k` ON (`k`.`id` = `rel`.`k_id`)
-										WHERE `k`.`idfylke` = '#fylke'
-										AND `pl`.`season` = '#season'
-										GROUP BY `pl`.`pl_id`
-										ORDER BY `pl`.`pl_name`",
-										array('fylke'=>get_option('fylke'),
-											  'season'=>get_option('season')));
-				$monstringer = $monstringer->run();
-				$options = '<select name="pl_invite_id">';
-				if($monstringer)
-					while($r = mysql_fetch_assoc($monstringer)) {
-						$options .= '<option value="'.$r['pl_id'].'">'.utf8_encode($r['pl_name']).'</option>';
-					}
-				$options .= '</select>';
-			} else {
-				$options = '<input type="hidden" value="'.get_option('pl_id').'" name="pl_invite_id" />';
+	$options = array();
+	if(get_option('site_type')=='fylke') {
+		$monstringer = new SQL("SELECT `pl`.`pl_id`, `pl_name` FROM `smartukm_place` AS `pl`
+								JOIN `smartukm_rel_pl_k` AS `rel` ON (`rel`.`pl_id` = `pl`.`pl_id`)
+								JOIN `smartukm_kommune` AS `k` ON (`k`.`id` = `rel`.`k_id`)
+								WHERE `k`.`idfylke` = '#fylke'
+								AND `pl`.`season` = '#season'
+								GROUP BY `pl`.`pl_id`
+								ORDER BY `pl`.`pl_name`",
+								array('fylke'=>get_option('fylke'),
+									  'season'=>get_option('season')));
+		$monstringer = $monstringer->run();
+		if($monstringer)
+			while($r = mysql_fetch_assoc($monstringer)) {
+				$options[] = array('pl_id' => $r['pl_id'], 'name' => utf8_encode($r['pl_name']));
 			}
-	
+	} else {
+		$options[] = array('pl_id' => get_option('pl_id')):
+	}
 	
 	$infos = array('site_type' => get_option('site_type'),
-				   'ambassadorer' => $pl->ambassadorer());
+				   'ambassadorer' => $pl->ambassadorer(),
+				   'monstringer' => $options);
 	echo TWIG('ambassador_mine.twig.html', $infos , dirname(__FILE__));
 }
 

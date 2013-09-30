@@ -4,13 +4,18 @@
 	<form action="" method="POST">
 		<input type="hidden" name="tab" value="ambassadorer" />
 		<input type="text" name="ambassadorinvite" id="ambassadorinvite" />
-		$options
+		{% if monstringer|length > 1 %}
+		<select name="pl_invite_id">
+		{% for monstring in monstringer %}
+			<option value="{{monstring.pl_id}}">{{monstring.name}}</option>
+		{% endfor %}
+		</select>
+		{% else %}
+		<input type="hidden" name="pl_invite_id" value="{{monstringer[0].pl_id}}" />
 		<input type="submit" value="Invitér" />
 	</form>
 
-	<h4>Send SMS-invitasjon til ambassadør(er)</h4>
-	$res
-	<hr />
+	<h3>Hva skjer?</h3>
 	<h4>Når du inviterer ambassadører vil de motta følgende SMS:</h4>
 	Hei! Vi håper at du vil bli ambassadør for UKM. Du gjør så mye eller lite du vil :) Svar UKM AMB for å motta mer informasjon! Hilsen UKM
 	<hr />
@@ -19,7 +24,7 @@
 	Registrer deg på: http://ukm.no/ambassador så er du i gang!
 </div>
 
-<h3>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h3>	
+<h2>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h2>	
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
 		<th>&nbsp;</th>
