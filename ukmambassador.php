@@ -44,7 +44,7 @@ function UKMambassador() {
 				$options[] = array('pl_id' => $r['pl_id'], 'name' => utf8_encode($r['pl_name']));
 			}
 	} else {
-		$options[] = array('pl_id' => get_option('pl_id')):
+		$options[] = array('pl_id' => get_option('pl_id'));
 	}
 	
 	$infos = array('site_type' => get_option('site_type'),
