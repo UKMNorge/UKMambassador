@@ -16,7 +16,7 @@ if(is_admin()) {
 	if($blog_id != 1)
 		add_action('admin_menu', 'UKMambassador_menu');
 		
-	add_action( 'admin_enqueue_scripts', 'UKMWambassador_scriptsandstyles' );
+	add_action( 'admin_enqueue_scripts', 'UKMambassador_scriptsandstyles' );
 }
 
 function UKMambassador_menu() {
@@ -77,6 +77,6 @@ function UKMambassador_invite() {
 	return $send_status;
 }
 
-function UKMWambassador_scriptsandstyles() {
+function UKMambassador_scriptsandstyles() {
 	wp_enqueue_style('ukmambassador', plugin_dir_url( __FILE__ ) .'/css/ukmambassador.css');
 }

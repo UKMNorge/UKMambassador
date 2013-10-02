@@ -21,8 +21,8 @@
 	Hei! Vi håper at du vil bli ambassadør for UKM. Du gjør så mye eller lite du vil :) Svar UKM AMB for å motta mer informasjon! Hilsen UKM
 	<hr />
 	<h4>De som svarer UKM AMB vil motta følgende SMS:</h4>
-	En UKM-ambassadør forteller andre om UKM, og bidrar til at flere melder seg på. Du får en gratis T-skjorte og noen tips fra oss, men det viktigste verktøyet er deg selv og dine erfaringer! Det er ingen forpliktelser, men om du gjør en god jobb kan du vinne både 1000 kr og en gratistur til UKM-festivalen. 
-	Registrer deg på: http://ukm.no/ambassador så er du i gang!
+	En UKM-ambassadør forteller andre om UKM, og bidrar til at flere melder seg på. Du får en gratis T-skjorte og noen tips fra oss, men det viktigste verktøyet er deg selv og dine erfaringer! Det er ingen forpliktelser, men om du gjør en god jobb kan du vinne en gratistur til UKM-festivalen. 
+Registrer deg på: http://ukm.no/ambassador så er du i gang!
 </div>
 
 <h2>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h2>	
@@ -40,22 +40,24 @@
 		<th align="left">&nbsp;</th>
 		<th align="left">Navn</th>
 		<th align="left">Mobil</th>
-		<th align="left">Sesong</th>
+		<th align="left">Registrert i</th>
 		{% if site_type != "kommune" %}
 		<th align="left">Tilknyttet mønstring</th>
 		{% endif %}
+		<th align="left">E-post</th>
 	</tr>
 	{% for ambassador in ambassadorer %}	
 	<tr>
 		<td><a href="{{ambassador.link}}" target="_blank">
 				<img src="{{ambassador.image}}" style="margin:0px;padding:0px;" /></a>
 		</td>
-		<td width="200"><a href="{{ambassador.link}}">{{ambassador.firstname}} {{ambassador.lastname}}</td>
-		<td width="100">{{ambassador.phone}}</td>
-		<td width="250">{{ambassador.season}}</td>
+		<td width="200">{{ambassador.firstname}} {{ambassador.lastname}}<br /><a href="{{ambassador.link}}">På facebook</a></td>
+		<td width="100" class="UKMSMS">{{ambassador.phone}}</td>
+		<td width="50">{{ambassador.season}}</td>
 		{% if site_type != "kommune" %}
 		<td width="250">{{ambassador.monstring}}</td>
 		{% endif %}
+		<td width="250"><a href="mailto:{{ambassador.email}}">{{ambassador.email}}</a></td>
 	</tr>
 	{% endfor %}
 </table>
