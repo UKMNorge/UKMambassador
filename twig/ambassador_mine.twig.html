@@ -51,7 +51,10 @@ Registrer deg på: http://ukm.no/ambassador så er du i gang!
 		<td><a href="{{ambassador.link}}" target="_blank">
 				<img src="{{ambassador.image}}" style="margin:0px;padding:0px;" /></a>
 		</td>
-		<td width="200">{{ambassador.firstname}} {{ambassador.lastname}}<br /><a href="{{ambassador.link}}">På facebook</a></td>
+		<td width="200">
+			<strong>{{ambassador.firstname}} {{ambassador.lastname}}</strong><br />
+			<a href="{{ambassador.link}}" target="_blank">På facebook</a>
+		</td>
 		<td width="100" class="UKMSMS">{{ambassador.phone}}</td>
 		<td width="50">{{ambassador.season}}</td>
 		{% if site_type != "kommune" %}
