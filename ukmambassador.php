@@ -14,9 +14,10 @@ require_once('UKM/inc/twig-admin.inc.php');
 if(is_admin()) {
 	global $blog_id;
 	if($blog_id == 1)
-		add_action('admin_menu', 'UKMambassador_menu');
-	else
 		add_action('admin_menu', 'UKMambassador_Norgemenu');
+	else
+		add_action('admin_menu', 'UKMambassador_menu');
+
 		
 	add_action( 'admin_enqueue_scripts', 'UKMambassador_scriptsandstyles' );
 }
@@ -31,7 +32,7 @@ function UKMambassador_Norgemenu() {
 
 
 function UKMambassadorNorge() {
-	echo TWIG('ambassador_norge_dash.twig.html', array(), dirname(__FILE__));
+	echo TWIG('ambassador_norge.twig.html', array(), dirname(__FILE__));
 }
 
 
