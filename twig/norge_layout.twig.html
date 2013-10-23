@@ -1,0 +1,34 @@
+<h2>UKM-ambassadører</h2>
+<div class="UKM_tabs">
+	<a href="?page=UKMambassadorNorge&action=info" {{ active == 'upload' ? 'class="active"' : ''}}>
+		<div>
+			<span class="tab_header">Oversikt</span>
+			<img src="http://ico.ukm.no/info-button-256.png" width="25" border="0" /><br />
+			<span class="tab_description"></span>
+		</div>
+	</a>
+	<a href="?page=UKMambassadorNorge&action=liste" {{ active == 'list' ? 'class="active"' : ''}}>
+		<div>
+			<span class="tab_header">Alle ambassadører</span>
+			<img src="http://ico.ukm.no/info-button-256.png" width="25" border="0" /><br />
+			<span class="tab_description"></span>
+		</div>
+	</a>
+
+	<a href="?page=UKMambassadorNorge&action=pakke" {{ active == 'list' ? 'class="active"' : ''}}>
+		<div>
+			<span class="tab_header">Velkomstpakke</span>
+			<img src="http://ico.ukm.no/info-button-256.png" width="25" border="0" /><br />
+			<span class="tab_description"></span>
+		</div>
+	</a>
+
+</div>
+
+<div class="video_tabs_desc">
+	<span>
+	</span>
+</div>
+<div class="UKM_content_wrapper">
+	{% block content %}{% endblock %}
+</div>

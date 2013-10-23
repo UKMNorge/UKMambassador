@@ -13,8 +13,10 @@ require_once('UKM/inc/twig-admin.inc.php');
 ## HOOK MENU AND SCRIPTS
 if(is_admin()) {
 	global $blog_id;
-	if($blog_id != 1)
+	if($blog_id == 1)
 		add_action('admin_menu', 'UKMambassador_menu');
+	else
+		add_action('admin_menu', 'UKMambassador_Norgemenu');
 		
 	add_action( 'admin_enqueue_scripts', 'UKMambassador_scriptsandstyles' );
 }
@@ -22,6 +24,16 @@ if(is_admin()) {
 function UKMambassador_menu() {
 	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/ambassador-menu.png',120);
 }
+
+function UKMambassador_Norgemenu() {
+	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', 'http://ico.ukm.no/ambassador-menu.png',120);
+}
+
+
+function UKMambassadorNorge() {
+	echo TWIG('ambassador_norge_dash.twig.html', array(), dirname(__FILE__));
+}
+
 
 function UKMambassador() {
 	if($_SERVER['REQUEST_METHOD']==='POST') {
