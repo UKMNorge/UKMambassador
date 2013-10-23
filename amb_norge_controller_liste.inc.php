@@ -85,7 +85,7 @@ foreach( $infos['fylker'] as $fylke ) {
 		
 		exCell('P'.$row, $monstring->get('pl_name'));
 		exCell('Q'.$row, $monstring->get('season'));
-		exCell('R'.$row, $fylke->navn);
+		exCell('R'.$row, $fylke['navn']);
 	}
 }
 
