@@ -11,7 +11,8 @@
 	$ant_venter = $sql->run('field', 'num');
 	
 	$fylker = new SQL("SELECT `id`
-					   FROM `smartukm_fylke`");
+					   FROM `smartukm_fylke`
+					   WHERE `id` < 22");
 	$fylker = $fylker->run();
 	$fylkedata = array();
 	while( $r = mysql_fetch_assoc( $fylker ) ) {
