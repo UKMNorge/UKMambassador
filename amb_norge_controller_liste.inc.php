@@ -62,7 +62,7 @@ foreach( $infos['fylker'] as $fylke ) {
 		$gender = $amb->gender == 'male' ? 'Gutt' : 'Jente';
 		$monstring = new monstring( $amb->pl_id );
 		
-		exCell('A'.$row, $amb->id);
+		exCell('A'.$row, $amb->ID);
 		exCell('B'.$row, $amb->firstname);
 		exCell('C'.$row, $amb->lastname);
 		exCell('D'.$row, $amb->phone);
