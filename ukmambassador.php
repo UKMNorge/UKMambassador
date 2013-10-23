@@ -46,10 +46,11 @@ function UKMambassadorNorge() {
 		case 'liste':
 			require_once('amb_norge_controller_liste.inc.php');
 			echo TWIG('ambassador_norge_liste.twig.html', $infos, dirname(__FILE__));
+			break;
 		default:
 			require_once('amb_norge_controller_info.inc.php');
 			echo TWIG('ambassador_norge.twig.html', $infos, dirname(__FILE__));
-		return;
+			break;
 	}
 }
 
