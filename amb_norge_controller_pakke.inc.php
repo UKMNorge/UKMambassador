@@ -60,7 +60,7 @@ if(isset($_GET['generate'])) {
 		
 		$sqlUpdate = new SQLins('ukm_ambassador_skjorte', array('amb_id' => $r['amb_ID']));
 		$sqlUpdate->add('sendt', 'true');
-		echo $sqlUpdate->debug();
+		$sqlUpdate->run();
 	}
 	
 	
