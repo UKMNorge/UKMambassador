@@ -32,15 +32,16 @@ function UKMambassador_Norgemenu() {
 }
 
 function UKMambassador_scripts_and_styles(){
-	wp_enqueue_script('handlebars_js');
+//	wp_enqueue_script('handlebars_js');
 	wp_enqueue_script('bootstrap_js');
 	wp_enqueue_style('bootstrap_css');
-
 }
 
 
 function UKMambassadorNorge() {
-	echo TWIG('ambassador_norge.twig.html', array(), dirname(__FILE__));
+
+	require_once('amb_norge_controller_info.inc.php');
+	echo TWIG('ambassador_norge.twig.html', $infos, dirname(__FILE__));
 }
 
 

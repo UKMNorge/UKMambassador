@@ -2,20 +2,20 @@
 
 {% block content %}
 	<p class="lead">
-		Det er registrert {{antall_ambassadorer}} ambassadører totalt
+		Det er registrert {{ant_ambassadorer}} ambassadører totalt
 	</p>
 	
-	{% if venter_pakke|length > 10 %}
-		<div class="alert alert-error">
-			{{venter_pakke|length}} personer venter på at velkomstpakken skal sendes
+	{% if venter_pakke > 10 %}
+		<div class="alert alert-error span9">
+			{{venter_pakke}} personer venter på at velkomstpakken skal sendes
 		</div>
-	{% elseif venter_pakke|length > 0 %}
-		<div class="alert alert-warning">
-			{{venter_pakke|length}} personer venter på at velkomstpakken skal sendes
+	{% elseif venter_pakke > 0 %}
+		<div class="alert alert-warning span9">
+			{{venter_pakke}} personer venter på at velkomstpakken skal sendes
 		</div>
 	{% else %}
-		<div class="alert alert-success">
-			{{venter_pakke|length}} personer venter på at velkomstpakken skal sendes
+		<div class="alert alert-success span9">
+			{{venter_pakke}} personer venter på at velkomstpakken skal sendes
 		</div>	
 	{% endif %}
 	
@@ -31,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		{% for fylke in fylkesvis_fordeling %}
+		{% for fylke in fylker %}
 			<tr>
 				<td>{{fylke.navn}}</td>
 				<td>{{fylke.ant_ambassadorer}}</td>
