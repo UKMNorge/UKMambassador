@@ -45,6 +45,7 @@ if(isset($_GET['generate'])) {
 	$venter = $sql->run();
 	
 	while( $r = mysql_fetch_assoc( $venter ) ) {
+		$row++;
 		$amb = new ambassador( $r['amb_faceID'] );
 		
 		exCell('A'.$row, $amb->ID);
@@ -56,7 +57,13 @@ if(isset($_GET['generate'])) {
 		exCell('G'.$row, $amb->poststed);
 		exCell('H'.$row, $amb->phone);
 		exCell('I'.$row, $amb->email);
+		
+		$sqlUpdate = new SQLins('ukm_ambassador_skjorte', array('amb_id' => $r['amb_ID']));
+		$sqlUpdate->add('sendt', 'true');
+		echo $sqlUpdate->debug();
 	}
+	
+	
 	// WRITE
 	$excel = new StdClass;
 	$excel->link = exWrite($objPHPExcel,'UKM_Ambassadorer_alle_'.date('Y-m-d_His'));
