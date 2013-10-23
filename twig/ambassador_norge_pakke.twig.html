@@ -6,7 +6,7 @@
 	<div class="clearfix"></div>
 	
 	{% if excel is defined %}
-		<div class="alert alert-info span9">
+		<div class="alert alert-info span10">
 			<strong>HUSK Å LASTE NED EXCEL-ARKET!</strong>
 			<br />
 			Hvis excel-arket ikke blir lastet ned nå vil bestillingene forsvinne!
@@ -19,7 +19,7 @@
 		</a>
 		(sist oppdatert: {{excel.created|date('d.m.Y H:i')}})
 	{% else %}
-		<div class="alert alert-error span9">
+		<div class="alert alert-error span10">
 			<strong> OBS:<br />
 			Når du nå trykker på knappen for å generere excel-listen over hvem som skal ha velkomstpakke,
 			vil disse <u>bli markert som sendt</u>.</strong>
