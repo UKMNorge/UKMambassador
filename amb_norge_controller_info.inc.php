@@ -22,6 +22,7 @@
 							 'link' => $fylke_monstring->get('link'),
 							 'ambassadorer' => $fylke_monstring->ambassadorer()
 						  );
+						  
 	}
 	
 	
