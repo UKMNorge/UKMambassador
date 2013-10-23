@@ -28,6 +28,14 @@ function UKMambassador_menu() {
 
 function UKMambassador_Norgemenu() {
 	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', 'http://ico.ukm.no/ambassador-menu.png',120);
+	add_action( 'admin_print_styles-' . $page, 'UKMambassador_scripts_and_styles' );
+}
+
+function UKMambassador_scripts_and_styles(){
+	wp_enqueue_script('handlebars_js');
+	wp_enqueue_script('bootstrap_js');
+	wp_enqueue_style('bootstrap_css');
+
 }
 
 
