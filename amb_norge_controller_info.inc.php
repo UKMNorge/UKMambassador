@@ -29,5 +29,6 @@
 	
 	$infos = array('ant_ambassadorer' => $ant_amb,
 			   'venter_pakke' => $ant_venter,
-			   'fylker' => $fylkedata
+			   'fylker' => $fylkedata,
+			   'active' => $_GET['action']
 			   );

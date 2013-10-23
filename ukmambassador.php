@@ -39,9 +39,18 @@ function UKMambassador_scripts_and_styles(){
 
 
 function UKMambassadorNorge() {
-
-	require_once('amb_norge_controller_info.inc.php');
-	echo TWIG('ambassador_norge.twig.html', $infos, dirname(__FILE__));
+	if(!isset($_GET['action']))
+		$_GET['action'] = 'info';
+		
+	switch($_GET['action']) {
+		case 'liste':
+			require_once('amb_norge_controller_liste.inc.php');
+			echo TWIG('ambassador_norge_liste.twig.html', $infos, dirname(__FILE__));
+		default:
+			require_once('amb_norge_controller_info.inc.php');
+			echo TWIG('ambassador_norge.twig.html', $infos, dirname(__FILE__));
+		return;
+	}
 }
 
 
