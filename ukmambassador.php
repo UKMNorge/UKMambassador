@@ -43,6 +43,10 @@ function UKMambassadorNorge() {
 		$_GET['action'] = 'info';
 		
 	switch($_GET['action']) {
+		case 'pakke': 
+			require_once('amb_norge_controller_pakke.inc.php');
+			echo TWIG('ambassador_norge_pakke.twig.html', $infos, dirname(__FILE__));
+			break;
 		case 'liste':
 			require_once('amb_norge_controller_liste.inc.php');
 			echo TWIG('ambassador_norge_liste.twig.html', $infos, dirname(__FILE__));
