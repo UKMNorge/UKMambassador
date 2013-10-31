@@ -70,7 +70,6 @@ function UKMambassador() {
 	
 	$options = array();
 	if(get_option('site_type')=='fylke') {
-echo 'test';
 		$monstringer = new SQL("SELECT `pl`.`pl_id`, `pl_name` FROM `smartukm_place` AS `pl`
 								JOIN `smartukm_rel_pl_k` AS `rel` ON (`rel`.`pl_id` = `pl`.`pl_id`)
 								JOIN `smartukm_kommune` AS `k` ON (`k`.`id` = `rel`.`k_id`)
