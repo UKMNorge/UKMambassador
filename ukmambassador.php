@@ -89,6 +89,7 @@ function UKMambassador() {
 		$options[] = array('pl_id' => get_option('pl_id'));
 	}
 	
+	require_once('UKM/ambassador.class.php');
 	if(isset($_GET['delete'])){
 		$amb = new ambassador( (int) $_GET['delete'] );
 		$res_del = $amb->delete();
