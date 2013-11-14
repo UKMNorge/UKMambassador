@@ -6,22 +6,25 @@
 </div>
 
 {% if invites %}
-	<h2>Status invitasjon</h2>
-	Du forsøkte å invitere {{invites|length}} personer, og status er følgende:<br />
-	<table class="table table-condensed">
-		<thead>
-			<tr>
-				<th>Mobilnummer</th>
-				<th>Status</th>
+	<div class="alert alert-info UKMwidth">
+		<h4>Status invitasjon(er)</h4>
+		<p>Du forsøkte å invitere {{invites|length}} personer, og status er følgende:</p>
+		
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th>Mobilnummer</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+		{% for invite in invites %}
+			<tr class="{% if invite.success %}success{% else %}error{% endif %}">
+				<td>{{invite.phone}}:</td>
+				<td>{% if invite.success %}Invitasjon sendt!{% else %}ERROR: {{invite.message}}{% endif %}</td>
 			</tr>
-		</thead>
-	{% for invite in invites %}
-		<tr class="{% if invite.success %}.success{% else %}.error{% endif %}">
-			<td>{{invite.phone}}:</td>
-			<td>{% if invite.success %}Invitasjon sendt!{% else %}ERROR: {{invite.message}}{% endif %}</td>
-		</tr>
-	{% endfor %}
-	</table>
+		{% endfor %}
+		</table>
+	</div>
 {% endif %}
 
 <div class="UKMwidth">
