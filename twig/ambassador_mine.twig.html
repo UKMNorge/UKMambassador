@@ -71,7 +71,7 @@ Registrer deg på: http://ukm.no/ambassador så er du i gang!
 	{% endfor %}
 </table>
 
-<ol class="unstyled">
+<ol class="unstyled" id="ambassadorer">
 	{% for ambassador in ambassadorer %}	
 	<li class="ambassador well well-mini">
 		<div class="monstring pull-right">
@@ -102,7 +102,9 @@ Registrer deg på: http://ukm.no/ambassador så er du i gang!
 			</div>
 			<div class="clearfix"></div>
 		</div>
-		
+
+		<img src="{{ambassador.image}}" class="pull-left img-circle" /></a>
+
 		<div class="name pull-left">
 			<h4>{{ambassador.firstname}} {{ambassador.lastname}}</h4>
 			<p>Registrert: {{ambassador.season}}</p>
