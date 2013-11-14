@@ -93,8 +93,6 @@ function UKMambassador() {
 				   'ambassadorer' => $pl->ambassadorer(),
 				   'monstringer' => $options,
 				   'invites' => $send_status);
-				   
-	var_dump($infos['ambassadorer']);
 	echo TWIG('ambassador_mine.twig.html', $infos , dirname(__FILE__));
 }
 
