@@ -1,30 +1,3 @@
-<div class="amb_invitebox">
-	<h2>Inviter noen til å bli ambassadør</h2>
-	Skriv inn ett mobilnummer, eller en liste kommaseparerte mobilnummer for å invitere ambassadør(er).
-	<form action="" method="POST">
-		<input type="hidden" name="tab" value="ambassadorer" />
-		<input type="text" name="ambassadorinvite" id="ambassadorinvite" />
-		{% if monstringer|length > 1 %}
-		<select name="pl_invite_id">
-		{% for monstring in monstringer %}
-			<option value="{{monstring.pl_id}}">{{monstring.name}}</option>
-		{% endfor %}
-		</select>
-		{% else %}
-		<input type="hidden" name="pl_invite_id" value="{{monstringer[0].pl_id}}" />
-		{% endif %}
-		<input type="submit" value="Invitér" />
-	</form>
-	
-	<h3>Hva skjer?</h3>
-	<h4>Når du inviterer ambassadører vil de motta følgende SMS:</h4>
-	Hei! Vi håper at du vil bli ambassadør for UKM. Du gjør så mye eller lite du vil :) Svar UKM AMB for å motta mer informasjon! Hilsen UKM
-	<hr />
-	<h4>De som svarer UKM AMB vil motta følgende SMS:</h4>
-	En UKM-ambassadør forteller andre om UKM, og bidrar til at flere melder seg på. Du får en gratis T-skjorte og noen tips fra oss, men det viktigste verktøyet er deg selv og dine erfaringer! Det er ingen forpliktelser, men om du gjør en god jobb kan du vinne en gratistur til UKM-festivalen. 
-Registrer deg på: http://ukm.no/ambassador så er du i gang!
-</div>
-
 <h2>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h2>	
 
 <div class="alert alert-warning">
@@ -40,36 +13,44 @@ Registrer deg på: http://ukm.no/ambassador så er du i gang!
 	{% endfor %}
 {% endif %}
 
-
-<table border="0" cellpadding="2" cellspacing="0">
-	<tr>
-		<th align="left">&nbsp;</th>
-		<th align="left">Navn</th>
-		<th align="left">Mobil</th>
-		<th align="left">Registrert i</th>
-		{% if site_type != "kommune" %}
-		<th align="left">Tilknyttet mønstring</th>
-		{% endif %}
-		<th align="left">E-post</th>
-	</tr>
-	{% for ambassador in ambassadorer %}	
-	<tr>
-		<td><a href="{{ambassador.link}}" target="_blank">
-				<img src="{{ambassador.image}}" style="margin:0px;padding:0px;" /></a>
-		</td>
-		<td width="200">
-			<strong>{{ambassador.firstname}} {{ambassador.lastname}}</strong><br />
-			<a href="{{ambassador.link}}" target="_blank">På facebook</a>
-		</td>
-		<td width="100" class="UKMSMS">{{ambassador.phone}}</td>
-		<td width="75">{{ambassador.season}}</td>
-		{% if site_type != "kommune" %}
-		<td width="250">{{ambassador.monstring}}</td>
-		{% endif %}
-		<td width="250"><a href="mailto:{{ambassador.email}}">{{ambassador.email}}</a></td>
-	</tr>
-	{% endfor %}
-</table>
+<div class="UKMwidth">
+	<button class="btn btn-success btn-medium" id="buttonInvite">Inviter noen til å bli ambassadør</button>
+	
+	<div class="well" style="display:none;">
+		<button type="button" class="close" data-dismiss="alert" id="closeInvite">&times;</button>
+		<h2>Inviter noen til å bli ambassadør</h2>
+		<p>Skriv inn ett mobilnummer, eller en liste kommaseparerte mobilnummer for å invitere ambassadør(er).</p>
+		<form action="" method="POST">
+			<input type="hidden" name="tab" value="ambassadorer" />
+			<input type="text" name="ambassadorinvite" id="ambassadorinvite" />
+			{% if monstringer|length > 1 %}
+			<select name="pl_invite_id">
+			{% for monstring in monstringer %}
+				<option value="{{monstring.pl_id}}">{{monstring.name}}</option>
+			{% endfor %}
+			</select>
+			{% else %}
+			<input type="hidden" name="pl_invite_id" value="{{monstringer[0].pl_id}}" />
+			{% endif %}
+			<input type="submit" value="Invitér" />
+		</form>
+		
+		<h3>Hva skjer?</h3>
+		<h4>Når du inviterer ambassadører vil de motta følgende SMS:</h4>
+		<p>
+			Hei! Vi håper at du vil bli ambassadør for UKM. Du gjør så mye eller lite du vil :) 
+			Svar UKM AMB for å motta mer informasjon! Hilsen UKM
+		</p>
+		<h4>De som svarer UKM AMB vil motta følgende SMS:</h4>
+		<p>
+			En UKM-ambassadør forteller andre om UKM, og bidrar til at flere melder seg på. 
+			Du får en gratis T-skjorte og noen tips fra oss, men det viktigste verktøyet er deg selv og dine erfaringer! 
+			Det er ingen forpliktelser, men om du gjør en god jobb kan du vinne en gratistur til UKM-festivalen.
+			Registrer deg på: http://ukm.no/ambassador så er du i gang!
+		</p>
+	</div>
+	
+</div>
 
 <ol class="unstyled" id="ambassadorer">
 	{% for ambassador in ambassadorer %}	
