@@ -7,3 +7,29 @@
 	border: 1px solid #ccc;
 	padding: 0px 15px 15px 15px;
 }
+
+#ambassadorer {
+ width: 800px;
+}
+
+#ambassadorer li {
+ padding: 5px;
+}
+
+#ambassadorer .name {
+ width: 300px;
+ margin: 0px 0px 0px 10px;
+ padding: 0px;
+}
+
+#ambassadorer .name h4 {
+ margin: 4px 0px 0px 0px;
+}
+
+#ambassadorer div.actions div {
+ text-align: center;
+ width: 60px;
+}
+#ambassadorer div.actions img {
+ width: 20px;
+}
