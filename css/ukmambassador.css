@@ -38,3 +38,7 @@ clear: both;
 #ambassadorer div.actions img {
  width: 20px;
 }
+
+#ambassadorer .delete {
+	color: #bc2121;	
+}

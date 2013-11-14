@@ -68,7 +68,7 @@
 
 <ol class="unstyled UKMwidth" id="ambassadorer">
 	{% for ambassador in ambassadorer %}	
-	<li class="ambassador well well-mini">
+	<li class="ambassador well well-mini" id="ambassador_{{ambassador.id}}" data-id="{{ambassador.id}}">
 		<div class="monstring pull-right">
 			{% if site_type != "kommune" %}
 				{{ambassador.monstring}}

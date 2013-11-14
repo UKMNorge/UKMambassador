@@ -24,11 +24,11 @@ jQuery(document).on('click', '.delete', function(){
 
 
 jQuery(document).on('click', '#closeInvite', function(){
- jQuery('#buttonInvite').show();
  jQuery('#formInvite').slideUp();
+ jQuery('#buttonInvite').show();
 });
 
 jQuery(document).on('click', '#buttonInvite', function() {
-  jQuery('#formInvite').slideDown();
   jQuery(this).hide();
+  jQuery('#formInvite').slideDown();
 });
