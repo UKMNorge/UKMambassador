@@ -5,6 +5,16 @@
 	<p>Vi oppdaterer akkurat nå ambassadør-modulen. Den kan derfor være litt ustabil ut torsdag. Vi beklager dette!</p>
 </div>
 
+{% if deleted is defined %}
+	<div class="alert alert-{{deleted?'success':'error'}}">
+		{% if deleted %}
+			Ambassadøren er nå slettet!
+		{% else %}
+			En feil oppsto ved sletting av ambassadøren. Vennligst prøv igjen
+		{% endif %}
+	</div>
+{% endif %}
+
 {% if invites %}
 	<div class="well UKMwidth">
 		<button type="button" class="close" data-dismiss="alert" id="closeInvite">&times;</button>

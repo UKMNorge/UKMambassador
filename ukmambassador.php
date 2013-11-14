@@ -89,10 +89,18 @@ function UKMambassador() {
 		$options[] = array('pl_id' => get_option('pl_id'));
 	}
 	
+	if(isset($_GET['delete']) {
+		$amb = new ambassador( (int) $_GET['delete'] );
+		$res_del = $amb->delete();
+	}
+	
 	$infos = array('site_type' => get_option('site_type'),
 				   'ambassadorer' => $pl->ambassadorer(),
 				   'monstringer' => $options,
 				   'invites' => $send_status);
+	if(isset($_GET['delete']) {
+		$infos['deleted'] = $res_del;
+	}
 	echo TWIG('ambassador_mine.twig.html', $infos , dirname(__FILE__));
 }
 
