@@ -20,3 +20,15 @@ jQuery(document).on('click', '.onface', function(){
 jQuery(document).on('click', '.delete', function(){
 	alert('Kommer snart!');
 });
+
+
+
+jQuery(document).on('click', '#closeInvite', function(){
+ jQuery('#buttonInvite').show();
+ jQuery('#formInvite').slideUp();
+});
+
+jQuery(document).on('click', '#buttonInvite', function() {
+  jQuery('#formInvite').slideDown();
+  jQuery(this).hide();
+});
