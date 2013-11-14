@@ -17,9 +17,6 @@ if(is_admin()) {
 		add_action('admin_menu', 'UKMambassador_Norgemenu');
 	else
 		add_action('admin_menu', 'UKMambassador_menu');
-
-		
-	add_action( 'admin_enqueue_scripts', 'UKMambassador_scriptsandstyles' );
 }
 
 function UKMambassador_menu() {
@@ -33,7 +30,10 @@ function UKMambassador_Norgemenu() {
 }
 
 function UKMambassador_scripts_and_styles(){
-//	wp_enqueue_script('handlebars_js');
+
+	wp_enqueue_style('ukmambassador_css', plugin_dir_url( __FILE__ ) .'/css/ukmambassador.css');
+	wp_enqueue_script('ukmambassador_js', plugin_dir_url( __FILE__ ) .'/ukmambassador.js');
+
 	wp_enqueue_script('bootstrap_js');
 	wp_enqueue_style('bootstrap_css');
 }
@@ -112,8 +112,4 @@ function UKMambassador_invite() {
 		$send_status[] = $ambassador->invite($invites[$i], $plid);
 	}
 	return $send_status;
-}
-
-function UKMambassador_scriptsandstyles() {
-	wp_enqueue_style('ukmambassador', plugin_dir_url( __FILE__ ) .'/css/ukmambassador.css');
 }
