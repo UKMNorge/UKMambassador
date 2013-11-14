@@ -8,8 +8,13 @@
 	padding: 0px 15px 15px 15px;
 }
 
+#buttonInvite {
+ float: right;
+ margin: 0px 0px 10px 0px;
+}
+
 #ambassadorer {
- width: 800px;
+clear: both;
 }
 
 #ambassadorer li {
