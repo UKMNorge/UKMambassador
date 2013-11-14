@@ -27,6 +27,11 @@ Registrer deg på: http://ukm.no/ambassador så er du i gang!
 
 <h2>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h2>	
 
+<div class="alert alert-warning">
+	<h4>OPPDATERING PÅ GANG</h4>
+	<p>Vi oppdaterer akkurat nå ambassadør-modulen. Den kan derfor være litt ustabil ut torsdag. Vi beklager dette!</p>
+</div>
+
 {% if invites %}
 	<h2>Status invitasjon</h2>
 	Du forsøkte å invitere {{invites|length}} personer, og status er følgende:<br />
@@ -34,6 +39,7 @@ Registrer deg på: http://ukm.no/ambassador så er du i gang!
 		<strong>{{invite.phone}}:</strong> {% if invite.success %}Invitasjon sendt!{% else %}ERROR: {{invite.message}}{% endif %}<br />
 	{% endfor %}
 {% endif %}
+
 
 <table border="0" cellpadding="2" cellspacing="0">
 	<tr>
@@ -64,3 +70,50 @@ Registrer deg på: http://ukm.no/ambassador så er du i gang!
 	</tr>
 	{% endfor %}
 </table>
+
+<ol class="unstyled">
+	{% for ambassador in ambassadorer %}	
+	<li class="ambassador">
+		<div class="monstring pull-right">
+			{% if site_type != "kommune" %}
+				{{ambassador.monstring}}
+			{% endif %}
+		</div>
+		
+		
+		<div class="actions pull-left">
+			<div class="pull-left details_show clickable">
+				<img src="//ico.ukm.no/sirkel-pluss-256.png" /><br />
+				<small>Vis detaljer</small>
+			</div>
+			<div class="pull-left details_hide clickable" style="display:none;">
+				<img src="//ico.ukm.no/sirkel-minus-256.png" /><br />
+				<small>Skjul detaljer</small>
+			</div>
+
+			<div class="pull-left onface clickable" data-url="{{ambassador.link}}/">
+				<img src="//ico.ukm.no/face-256.png" /><br />
+				<small>På facebook</small>
+			</div>
+
+			<div class="pull-left delete clickable">
+				<img src="//ico.ukm.no/trash-32.png" /><br />
+				<small>slett</small>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		
+		<div class="name pull-left">
+			<h4>{{ambassador.firstname}} {{ambassador.lastname}}</h4>
+			<p>Registrert: {{ambassador.season}}</p>
+		</div>
+		
+		<div class="contact pull-left">
+			<span class="UKMSMS">{{ambassador.phone}}</span>
+			<br />
+			<a href="mailto:{{ambassador.email}}">{{ambassador.email}}</a>
+		</div>
+		<div class="clearfix"></div>
+	</li>
+	{% endfor %}
+</ol>

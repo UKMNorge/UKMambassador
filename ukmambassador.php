@@ -24,6 +24,7 @@ if(is_admin()) {
 
 function UKMambassador_menu() {
 	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/ambassador-menu.png',120);
+	add_action( 'admin_print_styles-' . $page, 'UKMambassador_scripts_and_styles' );
 }
 
 function UKMambassador_Norgemenu() {
