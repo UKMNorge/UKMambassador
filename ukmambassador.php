@@ -14,19 +14,19 @@ require_once('UKM/inc/twig-admin.inc.php');
 if(is_admin()) {
 	global $blog_id;
 	if($blog_id == 1)
-		add_action('admin_menu', 'UKMambassador_Norgemenu');
+		add_action('UKM_admin_menu', 'UKMambassador_Norgemenu');
 	else
-		add_action('admin_menu', 'UKMambassador_menu');
+		add_action('UKM_admin_menu', 'UKMambassador_menu');
 }
 
 function UKMambassador_menu() {
-	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/ambassador-menu.png',120);
-	add_action( 'admin_print_styles-' . $page, 'UKMambassador_scripts_and_styles' );
+	UKM_add_menu_page('resources','Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/ambassador-menu.png',10);
+	UKM_add_scripts_and_styles('UKMambassador', 'UKMambassador_scripts_and_styles' );
 }
 
 function UKMambassador_Norgemenu() {
-	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', 'http://ico.ukm.no/ambassador-menu.png',120);
-	add_action( 'admin_print_styles-' . $page, 'UKMambassador_scripts_and_styles' );
+	UKM_add_menu_page('resources','Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', 'http://ico.ukm.no/ambassador-menu.png',10);
+	UKM_add_scripts_and_styles('UKMambassadorNorge', 'UKMambassador_scripts_and_styles' );
 }
 
 function UKMambassador_scripts_and_styles(){
