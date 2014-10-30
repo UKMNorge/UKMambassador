@@ -1,6 +1,7 @@
 <?php
 	$sql = new SQL("SELECT COUNT(`amb_id`) AS `num`
-					FROM `ukm_ambassador`");
+			FROM `ukm_ambassador`
+			WHERE `deleted` = 'false'");
 	$ant_amb = $sql->run('field', 'num');
 	
 	$sql = new SQL("SELECT COUNT(`amb`.`amb_id`) AS `num`
