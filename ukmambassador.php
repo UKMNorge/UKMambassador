@@ -10,13 +10,25 @@ Author URI: http://www.ukm-norge.no
 
 require_once('UKM/inc/twig-admin.inc.php');
 
+add_action('network_admin_menu', 'UKMambassador_Norgemenu');
+add_filter('UKMWPNETWDASH_messages', 'UKMambassador_network_dash_messages', 150);
+
+function UKMambassador_network_dash_messages( $MESSAGES ) {
+	$venter = (int) get_site_option('UKMambassador_pakker_som_venter');
+	if( $venter > 3) {
+		$MESSAGES[] = array('level' 	=> 'alert-error',
+							'module'	=> 'Ambassadører',
+							'header'	=> $venter . ' ambassadører venter på velkomstpakke',
+							'body' 		=> 'Pakkene må sendes ut regelmessig. Er det kort tid siden forrige pakke ble sendt ut kan dette varselet stå en liten stund.',
+							'link'		=> 'admin.php?page=UKMambassadorNorge&action=pakke'
+							);
+	}
+	return $MESSAGES;
+}
+
 ## HOOK MENU AND SCRIPTS
 if(is_admin()) {
-	global $blog_id;
-	if($blog_id == 1)
-		add_action('UKM_admin_menu', 'UKMambassador_Norgemenu');
-	else
-		add_action('UKM_admin_menu', 'UKMambassador_menu');
+	add_action('UKM_admin_menu', 'UKMambassador_menu');
 }
 
 function UKMambassador_menu() {
@@ -25,8 +37,8 @@ function UKMambassador_menu() {
 }
 
 function UKMambassador_Norgemenu() {
-	UKM_add_menu_page('resources','Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', 'http://ico.ukm.no/ambassador-menu.png',10);
-	UKM_add_scripts_and_styles('UKMambassadorNorge', 'UKMambassador_scripts_and_styles' );
+	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', 'http://ico.ukm.no/ambassador-menu.png',140);
+	add_action( 'admin_print_styles-' . $page, 'UKMambassador_scripts_and_styles' );
 }
 
 function UKMambassador_scripts_and_styles(){
