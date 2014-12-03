@@ -22,7 +22,7 @@ function UKMambassador_network_dash_messages( $MESSAGES ) {
 	$ant_venter = (int) $sql->run('field', 'num');
 	
 	if( $ant_venter > 3) {
-		$MESSAGES[] = array('level' 	=> 'alert-'. ($ant_venter > 3 ? 'error' : 'info'),
+		$MESSAGES[] = array('level' 	=> 'alert-'. ($ant_venter < 3 ? 'error' : 'info'),
 							'module'	=> 'Ambassadører',
 							'header'	=> $ant_venter . ' ambassadører venter på velkomstpakke',
 							'body' 		=> 'Pakkene må sendes ut regelmessig. Er det kort tid siden forrige pakke ble sendt ut kan dette varselet stå en liten stund.',
