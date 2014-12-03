@@ -14,11 +14,17 @@ add_action('network_admin_menu', 'UKMambassador_Norgemenu');
 add_filter('UKMWPNETWDASH_messages', 'UKMambassador_network_dash_messages', 150);
 
 function UKMambassador_network_dash_messages( $MESSAGES ) {
-	$venter = (int) get_site_option('UKMambassador_pakker_som_venter');
-	if( $venter > 3) {
+	$sql = new SQL("SELECT COUNT(`amb`.`amb_id`) AS `num`
+					FROM `ukm_ambassador` AS `amb`
+					JOIN `ukm_ambassador_skjorte` AS `skjorte`
+						ON (`amb`.`amb_id` = `skjorte`.`amb_id`)
+					WHERE `skjorte`.`sendt` = 'false'");
+	$ant_venter = (int) $sql->run('field', 'num');
+	
+	if( $ant_venter > 3) {
 		$MESSAGES[] = array('level' 	=> 'alert-error',
 							'module'	=> 'Ambassadører',
-							'header'	=> $venter . ' ambassadører venter på velkomstpakke',
+							'header'	=> $ant_venter . ' ambassadører venter på velkomstpakke',
 							'body' 		=> 'Pakkene må sendes ut regelmessig. Er det kort tid siden forrige pakke ble sendt ut kan dette varselet stå en liten stund.',
 							'link'		=> 'admin.php?page=UKMambassadorNorge&action=pakke'
 							);

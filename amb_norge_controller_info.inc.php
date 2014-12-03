@@ -11,8 +11,6 @@
 					WHERE `skjorte`.`sendt` = 'false'");
 	$ant_venter = $sql->run('field', 'num');
 	
-	update_site_option('UKMambassador_pakker_som_venter', $ant_venter );
-	
 	$fylker = new SQL("SELECT `id`
 					   FROM `smartukm_fylke`
 					   WHERE `id` < 22");
