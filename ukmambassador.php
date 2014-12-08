@@ -34,7 +34,10 @@ function UKMambassador_network_dash_messages( $MESSAGES ) {
 
 ## HOOK MENU AND SCRIPTS
 if(is_admin()) {
-	add_action('UKM_admin_menu', 'UKMambassador_menu');
+	$type = get_option('site_type');
+	if( $type == 'fylke' || $type == 'kommune' ) {
+		add_action('UKM_admin_menu', 'UKMambassador_menu');
+	}
 }
 
 function UKMambassador_menu() {
