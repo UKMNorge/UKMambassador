@@ -13,6 +13,18 @@ require_once('UKM/inc/twig-admin.inc.php');
 add_action('network_admin_menu', 'UKMambassador_Norgemenu');
 add_filter('UKMWPNETWDASH_messages', 'UKMambassador_network_dash_messages', 150);
 
+
+if( get_option('ukm_top_page') == 'ambassadorer' ) {
+	add_action('save_post', 'UKMambassador_cleanCache' );
+	add_action('delete_post', 'UKMambassador_cleanCache' );
+}
+
+function UKMambassador_cleanCache() {
+	require_once('hook_cache.inc.php');
+	hook_ambassador_cache_delete();
+}
+
+
 function UKMambassador_network_dash_messages( $MESSAGES ) {
 	$sql = new SQL("SELECT COUNT(`amb`.`amb_id`) AS `num`
 					FROM `ukm_ambassador` AS `amb`
