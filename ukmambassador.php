@@ -19,9 +19,9 @@ if( get_option('ukm_top_page') == 'ambassadorer' ) {
 	add_action('delete_post', 'UKMambassador_cleanCache' );
 }
 
-function UKMambassador_cleanCache() {
+function UKMambassador_cleanCache( $post_id ) {
 	require_once('hook_cache.inc.php');
-	hook_ambassador_cache_delete();
+	hook_ambassador_cache_delete( $post_id );
 }
 
 
