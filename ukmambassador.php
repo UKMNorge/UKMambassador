@@ -140,6 +140,8 @@ function UKMambassador() {
 
 function UKMambassador_invite() {
 	$invites = explode(',', $_POST['ambassadorinvite']);
+	$invites = str_replace(' ', '', $invites);
+	
 	$send_status = array();
 	
 	if(isset($_POST['pl_invite_id']))
