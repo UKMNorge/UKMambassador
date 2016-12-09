@@ -67,8 +67,8 @@ function UKMambassador_scripts_and_styles(){
 	wp_enqueue_style('ukmambassador_css', plugin_dir_url( __FILE__ ) .'/css/ukmambassador.css');
 	wp_enqueue_script('ukmambassador_js', plugin_dir_url( __FILE__ ) .'/ukmambassador.js');
 
-	wp_enqueue_script('bootstrap_js');
-	wp_enqueue_style('bootstrap_css');
+	wp_enqueue_script('WPbootstrap3_js');
+	wp_enqueue_style('WPbootstrap3_css');
 }
 
 
