@@ -1,37 +1,19 @@
-jQuery(document).on('click', '.details_hide', function(){
-	var amb = jQuery(this).parents('li');
-	jQuery(this).hide();
-	amb.find('.actions .details_show').show();
-	amb.find('.details').slideUp();
-});
-
-jQuery(document).on('click', '.details_show', function(){
-	var amb = jQuery(this).parents('li');
-	jQuery(this).hide();
-	amb.find('.actions .details_hide').show();
-	amb.find('.details').slideDown();
-});
-
-jQuery(document).on('click', '.onface', function(){
-	window.open(jQuery(this).attr('data-url'),'_blank');
+jQuery(document).ready(function(){
+	var url = window.location.href.split('?')[0] + '?page=UKMSMS_gui';
+	var form = jQuery('<form action="' + url + '" method="post" id="AMBinvite_form">' +
+						 '<input type="hidden" name="UKMSMS_message" id="AMBinvite_message" value="" />' +
+					  '</form>');
+	jQuery('body').append(form);
 });
 
 
-jQuery(document).on('click', '.delete', function(){
-	amb = jQuery(this).parents('li');
-	confirmed = confirm('Er du sikker på at du vil slette denne ambassadøren?');
-	if(confirmed)
-		 window.location.href = '?page=UKMambassador&delete=' + amb.attr('data-id');
+jQuery(document).on('click','.toggleMore', function(){
+    jQuery(this).parents('tr.ambassador').find('.xs-infos').toggleClass('hidden-xs', 400);
 });
 
 
-
-jQuery(document).on('click', '#closeInvite', function(){
-	jQuery('#formInvite').slideUp();
-	jQuery('#buttonInvite').show();
-});
-
-jQuery(document).on('click', '#buttonInvite', function() {
-	jQuery(this).hide();
-	jQuery('#formInvite').slideDown();
+jQuery(document).on('click', '#buttonInvite', function(){
+    var message = 'Vi vil at du skal bli UKM-ambassadør! Gå inn på http://ambassador.ukm.no for å registrere deg';
+    jQuery('#AMBinvite_message').val( message );
+	jQuery('#AMBinvite_form').submit();
 });

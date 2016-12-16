@@ -1,12 +1,7 @@
 <h2>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h2>	
 
-{# <div class="alert alert-warning">
-	<h4>OPPDATERING PÅ GANG</h4>
-	<p>Vi oppdaterer akkurat nå ambassadør-modulen. Den kan derfor være litt ustabil ut torsdag. Vi beklager dette!</p>
-</div> #}
-
 {% if deleted is defined %}
-	<div class="alert alert-{{deleted?'success':'error'}} UKMwidth">
+	<div class="alert alert-{{deleted?'success':'danger'}} UKMwidth">
 		{% if deleted %}
 			Ambassadøren er nå slettet!
 		{% else %}
@@ -15,116 +10,58 @@
 	</div>
 {% endif %}
 
-{% if invites %}
-	<div class="well UKMwidth">
-		<button type="button" class="close" data-dismiss="alert" id="closeInvite">&times;</button>
-		<h4>Status invitasjon(er)</h4>
-		<p>Du forsøkte å invitere {{invites|length}} personer, og status er følgende:</p>
-		
-		<table class="table table-condensed">
-			<thead>
-				<tr>
-					<th>Mobilnummer</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-		{% for invite in invites %}
-			<tr class="{% if invite.success %}success{% else %}error{% endif %}">
-				<td>{{invite.phone}}:</td>
-				<td>{% if invite.success %}Invitasjon sendt!{% else %}ERROR: {{invite.message}}{% endif %}</td>
-			</tr>
-		{% endfor %}
-		</table>
-	</div>
-{% endif %}
-
-<div class="UKMwidth">
-	<button class="btn btn-success btn-medium pull-right" id="buttonInvite">Inviter noen til å bli ambassadør</button>
-	<button class="btn btn-primary btn-medium pull-right" id="UKMSMSTOALL">Send SMS til alle ambassadører</button>
-	 
-	<div class="clearfix"></div>
-	<div class="well" style="display:none;" id="formInvite">
-		<button type="button" class="close" id="closeInvite">&times;</button>
-		<h2>Inviter noen til å bli ambassadør</h2>
-		<p>Skriv inn ett mobilnummer, eller en liste kommaseparerte mobilnummer for å invitere ambassadør(er).</p>
-		<form action="" method="POST">
-			<input type="hidden" name="tab" value="ambassadorer" />
-			<input type="text" name="ambassadorinvite" id="ambassadorinvite" />
-			{% if monstringer|length > 1 %}
-			<select name="pl_invite_id">
-			{% for monstring in monstringer %}
-				<option value="{{monstring.pl_id}}">{{monstring.name}}</option>
-			{% endfor %}
-			</select>
-			{% else %}
-			<input type="hidden" name="pl_invite_id" value="{{monstringer[0].pl_id}}" />
-			{% endif %}
-			<input type="submit" class="btn btn-primary" value="Invitér" />
-		</form>
-		
-		<h4>Når du inviterer ambassadører vil de motta følgende SMS:</h4>
-		<p>
-			Hei! Vi håper at du vil bli ambassadør for UKM. Du gjør så mye eller lite du vil :) 
-			Svar UKM AMB for å motta mer informasjon! Hilsen UKM
-		</p>
-		<h4>De som svarer UKM AMB vil motta følgende SMS:</h4>
-		<p>
-			En UKM-ambassadør forteller andre om UKM, og bidrar til at flere melder seg på. 
-			Du får en gratis T-skjorte og noen tips fra oss, men det viktigste verktøyet er deg selv og dine erfaringer! 
-			Registrer deg på: http://ukm.no/ambassador så er du i gang!
-		</p>
-	</div>
-	
+<div class="row">
+    <div class="col-xs-12">
+    	<button class="btn btn-success btn-medium pull-right" id="buttonInvite">Inviter noen til å bli ambassadør</button>
+    	<button class="btn btn-primary btn-medium pull-right" id="UKMSMSTOALL">Send SMS til alle ambassadører</button>	 
+        <div class="clearfix"></div>
+    </div>
 </div>
 
-<ol class="unstyled UKMwidth" id="ambassadorer">
+<table class="table table-striped" id="ambassadorer">
 	{% for ambassador in ambassadorer %}	
-	<li class="ambassador well well-mini" id="ambassador_{{ambassador.faceID}}" data-id="{{ambassador.faceID}}">
-		<div class="monstring pull-right">
-			{% if site_type != "kommune" %}
-				{{ambassador.monstring}}
-			{% endif %}
-		</div>
-		
-		
-		<div class="actions pull-left">
-			<div class="pull-left details_show clickable">
-				<img src="//ico.ukm.no/sirkel-pluss-256.png" /><br />
-				<small>Vis detaljer</small>
-			</div>
-			<div class="pull-left details_hide clickable" style="display:none;">
-				<img src="//ico.ukm.no/sirkel-minus-256.png" /><br />
-				<small>Skjul detaljer</small>
-			</div>
+	<tr class="ambassador" id="ambassador_{{ambassador.faceID}}" data-id="{{ambassador.faceID}}">
+        <td><img src="{{ambassador.image}}" class="pull-left img-circle" height="20" /></td>
+    	<th>
+        	<div class="pull-right visible-xs">
+                <img src="//ico.ukm.no/more-32.png" class="toggleMore clickable" height="25" style="margin-right:3px;" />
+        	</div>
+        	{{ambassador.firstname}} {{ambassador.lastname}}
+            <span class="UKMSMS visible-xs">{{ambassador.phone}}</span>
 
-			<div class="pull-left onface clickable" data-url="{{ambassador.link}}/">
-				<img src="//ico.ukm.no/face-256.png" /><br />
-				<small>På facebook</small>
-			</div>
+        	
+        	<div class="xs-infos hidden-xs hidden-sm hidden-md hidden-lg" style="display:none;">
+        	    <a href="mailto:{{ambassador.email}}" class="btn btn-block btn-xs btn-success">e-post</a>
+        	    <br />
 
-			<div class="pull-left delete clickable">
-				<img src="//ico.ukm.no/trash-32.png" /><br />
-				<small>slett</small>
-			</div>
-			<div class="clearfix"></div>
-		</div>
+                <a href="{{ ambassador.link }}" class="btn btn-block btn-xs btn-primary" target="_blank">facebook</a>
+                <br />
+                
+                <a href="?page=UKMambassador&delete={{ambassador.faceID}}" class="btn btn-block btn-xs btn-danger" onclick="return confirm('Sikker på at du vil slette {{ambassador.firstname}}?');">slett</a>
+                
+                <br />
+                <div class="small" align="center" style="font-weight: normal">
+                    <i>Registrert siden {{ambassador.season}}</i>
+                </small>
+                
+        	</div>
 
-		<img src="{{ambassador.image}}" class="pull-left img-circle" /></a>
-
-		<div class="name pull-left">
-			<h4>{{ambassador.firstname}} {{ambassador.lastname}}</h4>
-			<p>Registrert: {{ambassador.season}}</p>
-		</div>
-		
-		<div class="contact pull-left">
-			<span class="UKMSMS">{{ambassador.phone}}</span>
-			<br />
-			<a href="mailto:{{ambassador.email}}">{{ambassador.email}}</a>
-		</div>
-		<div class="clearfix"></div>
-		<div class="details" style="display:none;">
-			<div class="alert alert-info">Ingen detaljer tilgjengelig akkurat nå. I løpet av desember vil du her kunne se ambassadørenes UKM-erfaringer</div>
-		</div>
-	</li>
+        </th>
+    	<td class="hidden-xs">
+            <span class="UKMSMS">{{ambassador.phone}}</span>
+        </td>
+    	<td class="hidden-xs">
+        	<a href="mailto:{{ambassador.email}}">{{ambassador.email}}</a>
+    	</td>
+    	<td class="hidden-xs">
+        	{{ambassador.season}}
+        </td>
+    	<td class="hidden-xs">
+        	<a href="{{ ambassador.link }}" class="btn btn-xs btn-primary" target="_blank">facebook</a>
+        </td>
+    	<td class="hidden-xs">
+        	<a href="?page=UKMambassador&delete={{ambassador.id}}" class="btn btn-xs btn-danger" onclick="return confirm('Sikker på at du vil slette {{ambassador.firstname}}?');">slett</a>
+        </td>
+	</tr>
 	{% endfor %}
-</ol>
+</table>
