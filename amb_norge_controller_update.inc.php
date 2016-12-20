@@ -14,7 +14,6 @@ $infos['telefonliste'] = getTelefonliste();
 
 if($_POST['doUpdate'] == "true") {
 	$updated = doUpdate($infos['telefonliste']);
-	#die("Ikke implementert enda!");
 	$infos['oppdaterteNummer'] = $updated;
 }
 
@@ -32,19 +31,15 @@ function doUpdate($telefonliste) {
 		$text = "Hei! Tusen takk for den jobben du har gjort som UKM-ambassadør i år. Vil du være med som ambassadør i et år til? Svar UKM Hurra på denne meldingen, eller trykk på denne lenken: ".$ambLink;
 		$sms = new SMS( 'UKMambassador', get_option('pl_id') );	
 		$sms->text($text)->to($nummer)->from('UKMNorge');
-
-		// TODO: Fjern DIE og fjern utkommentert kode.
-		die("Sending av telefonnummer er ikke implementert enda! Før første kjøring må denne .");
 		
 		// Sett som deaktivert i databasen
 		$sql = new SQLins("ukm_ambassador", array('amb_phone' => $nummer));
 		$sql->add('deleted', 'true');
-		
-		#$sql->run();
+		$sql->run();
 		
 		// Faktisk send melding, men kun hvis vi er i prod.
-		if ( UKM_HOSTNAME == 'ukm.no' ) {
-			#$sms->ok();
+		if ( 'ukm.no' == UKM_HOSTNAME ) {
+			$sms->ok();
 			$oppdaterteNummer++;
 		}
 	}
