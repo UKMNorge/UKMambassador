@@ -11,8 +11,17 @@
 $infos = array();
 $infos['telefonliste'] = getTelefonliste();
 
-
-if($_POST['doUpdate'] == "true") {
+/**
+ * TEST-modus:
+ * Bør kjøres minst èn gang i testmodus, for å sjekke at alt funker.
+ *
+ * Sender kun meldinga til ett nummer gitt i $_POST['testNummer'];
+ */
+if($_POST['testUpdate'] == "true") {
+	$updated = doUpdate( array($_POST['testNummer']) );
+	$infos['oppdaterteNummer'] = $updated;
+}
+elseif($_POST['doUpdate'] == "true") {
 	$updated = doUpdate($infos['telefonliste']);
 	$infos['oppdaterteNummer'] = $updated;
 }
@@ -28,7 +37,7 @@ function doUpdate($telefonliste) {
 
 		// Sett opp melding
 		$ambLink = "http://ambassador.ukm.no/fortsett/".$nummer;
-		$text = date('Y')." er snart over, og vi vil si tusen takk for jobben du har gjort som UKM-ambassadør i år! Vil du være med som ambassadør i et år til? Svar UKM Hurra på denne meldingen, eller trykk på denne lenken: ".$ambLink;
+		$text = date('Y')." er snart over, og vi vil si tusen takk for jobben du har gjort som UKM-ambassadør i år! Vil du være med som ambassadør i et år til? Send UKM Hurra til 1963, eller trykk på denne lenken: ".$ambLink;
 		$sms = new SMS( 'UKMambassador', 0 );	
 		$sms->text($text)->to($nummer)->from('UKMNorge');
 		
