@@ -6,19 +6,38 @@
 	<p class="alert alert-{{ oppdaterteNummer > 0 ? 'success' : 'danger' }}">Melding er sendt ut til {{ oppdaterteNummer }} ambassadører.</p>	
 {% endif %}
 
-<p class="lead">Send ut SMS</p>
-<p>Dette skal gjøres èn gang hvert år, rundt jule-/nyttårs-tider. De som er registrert som aktive ambassadører i systemet vil da deaktiveres, og få tilsendt følgende SMS:</p>
+<div class="col-xs-12 col-md-8">
+	<p class="lead">Send ut SMS</p>
+	<p>Dette skal gjøres èn gang hvert år, rundt jule-/nyttårs-tider. De som er registrert som aktive ambassadører i systemet vil da deaktiveres, og få tilsendt følgende SMS:</p>
 
-<p class="alert alert-info">Hei! Tusen takk for jobben du har gjort som UKM-ambassadør i år. Vil du være med som ambassadør i et år til? Svar UKM Hurra på denne meldingen, eller trykk på denne lenken: <a href="#">https://ambassador.ukm.no/fortsett/*nummer*</a></p>
+	<p class="alert alert-info">{{ now|date('Y') }} er snart over, og vi vil si tusen takk for jobben du har gjort som UKM-ambassadør i år! Vil du være med som ambassadør i et år til? Send UKM Hurra til 1963, eller trykk på denne lenken: <a href="#">http://ambassador.ukm.no/fortsett/*nummer*</a></p>
 
-<p>OBS - Når du trykker på knappen vil meldingen bli sendt til alle registrerte ambassadører. Dette kan ta litt tid, så vær tålmodig! Trykker du flere ganger på knappen kan meldingen bli sendt til de samme personene flere ganger.
-</p>
-<p>
-<strong>Det er {{ telefonliste|length }} registrerte, aktive ambassadører i databasen.</strong>
-</p>
+	<p>OBS - Når du trykker på knappen vil meldingen bli sendt til alle registrerte ambassadører. Dette kan ta litt tid, så vær tålmodig! Trykker du flere ganger på knappen kan meldingen bli sendt til de samme personene flere ganger.
+	</p>
+</div>
+<div class="clearfix"></div>
 
-<form method="POST">
-	<input type="hidden" name="doUpdate" value="true">
-	<button type="submit" class="btn btn-danger">Merk ambassadører som utgåtte og send SMS</button>
-</form>
+<div class="col-xs-12 col-md-6">
+	<p class="lead">Test systemet før du sender ut SMS til alle</p>
+	<form method="POST">
+		<input type="hidden" name="testUpdate" value="true">
+		<label for="testNummer">Mobilnummer</label>
+		<input type="text" name="testNummer" id="testNummer" class="form-control">
+		<button type="submit" class="btn btn-primary">Test systemet med å sende SMS til dette nummeret.</button>
+	</form>
+</div>
+<div class="clearfix"></div>
+<p>&nbsp;</p>
+<div class="col-xs-12 col-md-6">
+	<p class="lead">Send ut SMS til alle ambassadører</p>
+	<p>
+	<strong>Det er {{ telefonliste|length }} registrerte, aktive ambassadører i databasen.</strong>
+	</p>
+
+	<form method="POST">
+		<input type="hidden" name="doUpdate" value="true">
+		<button type="submit" class="btn btn-danger">Merk ambassadører som utgåtte og send SMS</button>
+	</form>
+</div>
+<p>&nbsp;</p>
 {% endblock %}
