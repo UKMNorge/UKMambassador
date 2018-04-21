@@ -13,7 +13,7 @@ jQuery(document).on('click','.toggleMore', function(){
 
 
 jQuery(document).on('click', '#buttonInvite', function(){
-    var message = 'Vi vil at du skal bli UKM-ambassadør! Gå inn på http://ambassador.ukm.no for å registrere deg';
+    var message = 'Vi vil at du skal bli UKM-ambassadør! Gå inn på https://ambassador.ukm.no for å registrere deg';
     jQuery('#AMBinvite_message').val( message );
 	jQuery('#AMBinvite_form').submit();
 });

@@ -20,7 +20,7 @@ function hook_ambassador_cache_delete( $post_id ) {
 	
 	// CURL DELETE
 	require_once('UKM/curl.class.php');
-	$url = 'http://ambassador.'. UKM_HOSTNAME .'/wpcache/reset';
+	$url = 'https://ambassador.'. UKM_HOSTNAME .'/wpcache/reset';
 	$curl = new UKMCURL();
 	$curl->request( $url );
 }

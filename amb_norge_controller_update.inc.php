@@ -28,7 +28,7 @@ function doUpdate($telefonliste) {
 		}
 
 		// Sett opp melding
-		$ambLink = "http://ambassador.ukm.no/fortsett/".$nummer;
+		$ambLink = "https://ambassador.ukm.no/fortsett/".$nummer;
 		$text = "Hei! Tusen takk for den jobben du har gjort som UKM-ambassadør i år. Vil du være med som ambassadør i et år til? Svar UKM Hurra på denne meldingen, eller trykk på denne lenken: ".$ambLink;
 		$sms = new SMS( 'UKMambassador', get_option('pl_id') );	
 		$sms->text($text)->to($nummer)->from('UKMNorge');

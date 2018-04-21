@@ -53,12 +53,12 @@ if(is_admin()) {
 }
 
 function UKMambassador_menu() {
-	UKM_add_menu_page('resources','Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', 'http://ico.ukm.no/ambassador-menu.png',10);
+	UKM_add_menu_page('resources','Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', '//ico.ukm.no/ambassador-menu.png',10);
 	UKM_add_scripts_and_styles('UKMambassador', 'UKMambassador_scripts_and_styles' );
 }
 
 function UKMambassador_Norgemenu() {
-	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', 'http://ico.ukm.no/ambassador-menu.png',140);
+	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', '//ico.ukm.no/ambassador-menu.png',140);
 	add_action( 'admin_print_styles-' . $page, 'UKMambassador_scripts_and_styles' );
 }
 
