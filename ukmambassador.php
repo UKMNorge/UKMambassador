@@ -120,7 +120,7 @@ function UKMambassador() {
 		$monstringer = $monstringer->run();
 		if($monstringer)
 			while($r = SQL::fetch($monstringer)) {
-				$options[] = array('pl_id' => $r['pl_id'], 'name' => utf8_encode($r['pl_name']));
+				$options[] = array('pl_id' => $r['pl_id'], 'name' => $r['pl_name']);
 			}
 	} else {
 		$options[] = array('pl_id' => get_option('pl_id'));
