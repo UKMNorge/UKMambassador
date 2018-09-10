@@ -65,7 +65,7 @@ function getTelefonliste() {
 	$res = $qry->run();
 
 	$telefonliste = array();
-	while( $row = mysql_fetch_assoc($res) ) {
+	while( $row = SQL::fetch($res) ) {
 		$telefonliste[] = $row['amb_phone'];
 	}
 

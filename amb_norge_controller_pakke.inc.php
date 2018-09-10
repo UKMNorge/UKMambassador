@@ -44,7 +44,7 @@ if(isset($_GET['generate'])) {
 					WHERE `skjorte`.`sendt` = 'false'");
 	$venter = $sql->run();
 	
-	while( $r = mysql_fetch_assoc( $venter ) ) {
+	while( $r = SQL::fetch( $venter ) ) {
 		$row++;
 		$amb = new ambassador( $r['amb_faceID'] );
 		

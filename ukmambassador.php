@@ -119,7 +119,7 @@ function UKMambassador() {
 									  'season'=>get_option('season')));
 		$monstringer = $monstringer->run();
 		if($monstringer)
-			while($r = mysql_fetch_assoc($monstringer)) {
+			while($r = SQL::fetch($monstringer)) {
 				$options[] = array('pl_id' => $r['pl_id'], 'name' => utf8_encode($r['pl_name']));
 			}
 	} else {

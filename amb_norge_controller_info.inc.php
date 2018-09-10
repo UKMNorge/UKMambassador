@@ -16,7 +16,7 @@
 					   WHERE `id` < 22");
 	$fylker = $fylker->run();
 	$fylkedata = array();
-	while( $r = mysql_fetch_assoc( $fylker ) ) {
+	while( $r = SQL::fetch( $fylker ) ) {
 		$fylke_monstring = new fylke_monstring( $r['id'], get_option('season') );
 		$fylke_monstring = $fylke_monstring->monstring_get();
 		
