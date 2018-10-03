@@ -53,7 +53,7 @@ if(is_admin()) {
 }
 
 function UKMambassador_menu() {
-	UKM_add_menu_page('resources','Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', '//ico.ukm.no/ambassador-menu.png',10);
+	UKM_add_menu_page('kommunikasjon','Ambassadører', 'Ambassadører', 'editor', 'UKMambassador', 'UKMambassador', '//ico.ukm.no/ambassador-menu.png',30);
 	UKM_add_scripts_and_styles('UKMambassador', 'UKMambassador_scripts_and_styles' );
 }
 
