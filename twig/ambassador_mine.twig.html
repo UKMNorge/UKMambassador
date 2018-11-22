@@ -1,67 +1,115 @@
-<h2>Ambassadører knyttet til {% if site_type == "kommune" %}din lokalmønstring{% else %}lokalmønstringer i ditt fylke{% endif %}</h2>	
+{% if site_type == 'fylke' %}
+	<h2>
+		Ambassadører i fylket
+	</h2>
 
-{% if deleted is defined %}
-	<div class="alert alert-{{deleted?'success':'danger'}} UKMwidth">
-		{% if deleted %}
-			Ambassadøren er nå slettet!
-		{% else %}
-			En feil oppsto ved sletting av ambassadøren. Vennligst prøv igjen
-		{% endif %}
-	</div>
+	<p class="lead">
+		Ambassadører registreres nå som UKM-ressurs 
+		(se menyvalget "<a href="?page=UKMdeltakere">deltakere</a>").
+	</p>
+
+	<p class="lead">
+		Hvis du ønsker å ha ambassadører på fylkesnivå må disse videresendes fra {{ monstring.erOslo() ? 'bydelene' : 'kommunene'}}. 
+		Dette kan gjøres fra menyen "videresending" på lokalnivå.
+	</p>
+{% else %}
+
+	
+	{% if message is defined %}
+		<div class="alert alert-{{message.level}}}} UKMwidth">
+			{{ message.body }}
+		</div>
+	{% else %}
+		<div class="mt-4 alert alert-danger" style="margin-top: 2em;">
+			<p class="lead">
+					Ambassadører registreres nå som UKM-ressurs 
+					(under menyvalget "<a href="?page=UKMdeltakere">deltakere</a>").
+					<br />
+					Overfør dine ambassadører ved hjelp av listen nedenfor,
+					og les mer om den nye <a href="?page=UKMide_urg-og-ambassadorer">ambassadør-registreringen i verktøykassen</a>.
+				</p>
+		</div>
+	{% endif %}
+
+	<h2>Overfør ambassadører</h2>
+	<p></p>
+
+	{% if deleted is defined %}
+		<div class="alert alert-{{deleted?'success':'danger'}} UKMwidth">
+			{% if deleted %}
+				Ambassadøren er nå slettet!
+			{% else %}
+				En feil oppsto ved sletting av ambassadøren. Vennligst prøv igjen
+			{% endif %}
+		</div>
+	{% endif %}
+
+
+	<form method="POST">
+		<table class="table table-striped" id="ambassadorer">
+			{% for ambassador in ambassadorer %}	
+			<tr class="ambassador" id="ambassador_{{ambassador.faceID}}" data-id="{{ambassador.faceID}}">
+				<td>
+					<input type="checkbox" name="transfer[]" value="{{ambassador.faceID}}" />
+				</td>
+				{% if monstring.erFellesmonstring() %}
+					<td>
+						<select name="kommune_{{ ambassador.faceID }}">
+							{% for kommune in monstring.getKommuner().getAll() %}
+								<option value="{{kommune.getId()}}">{{kommune.getNavn()}}</option>
+							{% endfor %}
+						</select>
+					</td>
+				{% else %}
+					<input type="text" name="kommune_{{ambassador.faceID}}" value="{{ monstring.getKommune().getId() }}" />
+				{% endif %}						
+				<td><img src="{{ambassador.image}}" class="pull-left img-circle" height="20" /></td>
+				<th>
+					<div class="pull-right visible-xs">
+						<img src="//ico.ukm.no/more-32.png" class="toggleMore clickable" height="25" style="margin-right:3px;" />
+					</div>
+					{{ambassador.firstname}} {{ambassador.lastname}}
+					<span class="UKMSMS visible-xs">{{ambassador.phone}}</span>
+
+					
+					<div class="xs-infos hidden-xs hidden-sm hidden-md hidden-lg" style="display:none;">
+						<a href="mailto:{{ambassador.email}}" class="btn btn-block btn-xs btn-success">e-post</a>
+						<br />
+
+						<a href="{{ ambassador.link }}" class="btn btn-block btn-xs btn-primary" target="_blank">facebook</a>
+						<br />
+						
+						<a href="?page=UKMambassador&delete={{ambassador.faceID}}" class="btn btn-block btn-xs btn-danger" onclick="return confirm('Sikker på at du vil slette {{ambassador.firstname}}?');">slett</a>
+						
+						<br />
+						<div class="small" align="center" style="font-weight: normal">
+							<i>Registrert siden {{ambassador.season}}</i>
+						</small>
+						
+					</div>
+
+				</th>
+				<td class="hidden-xs">
+					<span class="UKMSMS">{{ambassador.phone}}</span>
+				</td>
+				<td class="hidden-xs">
+					<a href="mailto:{{ambassador.email}}">{{ambassador.email}}</a>
+				</td>
+				<td class="hidden-xs">
+					{{ambassador.season}}
+				</td>
+				<td class="hidden-xs">
+					<a href="{{ ambassador.link }}" class="btn btn-xs btn-primary" target="_blank">facebook</a>
+				</td>
+				<td class="hidden-xs">
+					<a href="?page=UKMambassador&delete={{ambassador.faceID}}" class="btn btn-xs btn-danger" onclick="return confirm('Sikker på at du vil slette {{ambassador.firstname}}?');">slett</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+		<div class="clearfix" style="margin-top: 2em;"></div>
+
+		<button type="submit" name="submit" class="btn btn-success">Overfør valgte ambassadører</button>
+	</form>
 {% endif %}
-
-<div class="row">
-    <div class="col-xs-12">
-    	<button class="btn btn-success btn-medium pull-right" id="buttonInvite">Inviter noen til å bli ambassadør</button>
-    	<button class="btn btn-primary btn-medium pull-right" id="UKMSMSTOALL">Send SMS til alle ambassadører</button>	 
-        <div class="clearfix"></div>
-    </div>
-</div>
-
-<table class="table table-striped" id="ambassadorer">
-	{% for ambassador in ambassadorer %}	
-	<tr class="ambassador" id="ambassador_{{ambassador.faceID}}" data-id="{{ambassador.faceID}}">
-        <td><img src="{{ambassador.image}}" class="pull-left img-circle" height="20" /></td>
-    	<th>
-        	<div class="pull-right visible-xs">
-                <img src="//ico.ukm.no/more-32.png" class="toggleMore clickable" height="25" style="margin-right:3px;" />
-        	</div>
-        	{{ambassador.firstname}} {{ambassador.lastname}}
-            <span class="UKMSMS visible-xs">{{ambassador.phone}}</span>
-
-        	
-        	<div class="xs-infos hidden-xs hidden-sm hidden-md hidden-lg" style="display:none;">
-        	    <a href="mailto:{{ambassador.email}}" class="btn btn-block btn-xs btn-success">e-post</a>
-        	    <br />
-
-                <a href="{{ ambassador.link }}" class="btn btn-block btn-xs btn-primary" target="_blank">facebook</a>
-                <br />
-                
-                <a href="?page=UKMambassador&delete={{ambassador.faceID}}" class="btn btn-block btn-xs btn-danger" onclick="return confirm('Sikker på at du vil slette {{ambassador.firstname}}?');">slett</a>
-                
-                <br />
-                <div class="small" align="center" style="font-weight: normal">
-                    <i>Registrert siden {{ambassador.season}}</i>
-                </small>
-                
-        	</div>
-
-        </th>
-    	<td class="hidden-xs">
-            <span class="UKMSMS">{{ambassador.phone}}</span>
-        </td>
-    	<td class="hidden-xs">
-        	<a href="mailto:{{ambassador.email}}">{{ambassador.email}}</a>
-    	</td>
-    	<td class="hidden-xs">
-        	{{ambassador.season}}
-        </td>
-    	<td class="hidden-xs">
-        	<a href="{{ ambassador.link }}" class="btn btn-xs btn-primary" target="_blank">facebook</a>
-        </td>
-    	<td class="hidden-xs">
-        	<a href="?page=UKMambassador&delete={{ambassador.faceID}}" class="btn btn-xs btn-danger" onclick="return confirm('Sikker på at du vil slette {{ambassador.firstname}}?');">slett</a>
-        </td>
-	</tr>
-	{% endfor %}
-</table>
