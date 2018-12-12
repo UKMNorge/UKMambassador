@@ -1,0 +1,15 @@
+<h2>Følgende ambassadører ble overført</h2>
+
+<ol class="list-group">
+    {% for navn in overfort %}
+        <li class="list-group-item">
+            {{ navn }}
+        </li>
+    {% else %}
+        <li class="list-group-item">
+            Beklager, ingen personer ble overført.
+        </li>
+    {% endfor %}
+</ol>
+
+<a href="?page=UKMambassador" class="btn btn-primary">Tilbake til oversikten</a>

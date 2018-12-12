@@ -10,35 +10,14 @@ Author URI: http://www.ukm-norge.no
 
 require_once('UKM/inc/twig-admin.inc.php');
 
-add_action('network_admin_menu', 'UKMambassador_Norgemenu');
 add_filter('UKMWPNETWDASH_messages', 'UKMambassador_network_dash_messages', 150);
 
-
-if( get_option('ukm_top_page') == 'ambassadorer' ) {
-	add_action('save_post', 'UKMambassador_cleanCache' );
-	add_action('delete_post', 'UKMambassador_cleanCache' );
-}
-
-function UKMambassador_cleanCache( $post_id ) {
-	require_once('hook_cache.inc.php');
-	hook_ambassador_cache_delete( $post_id );
-}
-
-
 function UKMambassador_network_dash_messages( $MESSAGES ) {
-	$sql = new SQL("SELECT COUNT(`amb`.`amb_id`) AS `num`
-					FROM `ukm_ambassador` AS `amb`
-					JOIN `ukm_ambassador_skjorte` AS `skjorte`
-						ON (`amb`.`amb_id` = `skjorte`.`amb_id`)
-					WHERE `skjorte`.`sendt` = 'false'");
-	$ant_venter = (int) $sql->run('field', 'num');
-	
-	if( $ant_venter > 4) {
-		$MESSAGES[] = array('level' 	=> 'alert-'. ($ant_venter > 9 ? 'error' : 'info'),
+	if( date('Y') > 2016 && date('m') > 8 ) {
+		$MESSAGES[] = array('level' 	=> 'alert-error',
 							'module'	=> 'Ambassadører',
-							'header'	=> $ant_venter . ' ambassadører venter på velkomstpakke',
-							'body' 		=> 'Pakkene må sendes ut regelmessig. Er det kort tid siden forrige pakke ble sendt ut kan dette varselet stå en liten stund.',
-							'link'		=> 'admin.php?page=UKMambassadorNorge&action=pakke'
+							'header'	=> 'Mest sannsynlig er det på tide å slette ambassadør-modulen',
+							'body' 		=> 'I utgangspunktet burde ikke denne modulen være nødvendig lengre.',
 							);
 	}
 	return $MESSAGES;
@@ -48,7 +27,9 @@ function UKMambassador_network_dash_messages( $MESSAGES ) {
 if(is_admin()) {
 	$type = get_option('site_type');
 	if( $type == 'fylke' || $type == 'kommune' ) {
-		add_action('UKM_admin_menu', 'UKMambassador_menu');
+		if( !get_option('ambassador_bye_bye') || $_GET['page'] == 'UKMambassador' ) {
+			add_action('UKM_admin_menu', 'UKMambassador_menu');
+		}
 	}
 }
 
@@ -57,107 +38,111 @@ function UKMambassador_menu() {
 	UKM_add_scripts_and_styles('UKMambassador', 'UKMambassador_scripts_and_styles' );
 }
 
-function UKMambassador_Norgemenu() {
-	$page = add_menu_page('Ambassadører', 'Ambassadører', 'editor', 'UKMambassadorNorge', 'UKMambassadorNorge', '//ico.ukm.no/ambassador-menu.png',140);
-	add_action( 'admin_print_styles-' . $page, 'UKMambassador_scripts_and_styles' );
-}
-
 function UKMambassador_scripts_and_styles(){
-
-	wp_enqueue_style('ukmambassador_css', plugin_dir_url( __FILE__ ) .'/css/ukmambassador.css');
-	wp_enqueue_script('ukmambassador_js', plugin_dir_url( __FILE__ ) .'/ukmambassador.js');
-
 	wp_enqueue_script('WPbootstrap3_js');
 	wp_enqueue_style('WPbootstrap3_css');
 }
 
-
-function UKMambassadorNorge() {
-	if(!isset($_GET['action']))
-		$_GET['action'] = 'info';
-		
-	switch($_GET['action']) {
-		case 'pakke': 
-			require_once('amb_norge_controller_pakke.inc.php');
-			echo TWIG('ambassador_norge_pakke.twig.html', $infos, dirname(__FILE__));
-			break;
-		case 'liste':
-			require_once('amb_norge_controller_liste.inc.php');
-			echo TWIG('ambassador_norge_liste.twig.html', $infos, dirname(__FILE__));
-			break;
-		case 'update':
-			require_once('amb_norge_controller_update.inc.php');
-			echo TWIG('ambassador_norge_update.twig.html', $infos, dirname(__FILE__));
-			break;
-		default:
-			require_once('amb_norge_controller_info.inc.php');
-			echo TWIG('ambassador_norge.twig.html', $infos, dirname(__FILE__));
-			break;
-	}
-}
-
-
-function UKMambassador() {
-	if($_SERVER['REQUEST_METHOD']==='POST') {
-		$send_status = UKMambassador_invite();
-	} else
-		$send_status = false;
-		
+function UKMambassador() {	
 	require_once('UKM/monstring.class.php');
-	$pl = new monstring(get_option('pl_id'));
-	
-	$options = array();
-	if(get_option('site_type')=='fylke') {
-		$monstringer = new SQL("SELECT `pl`.`pl_id`, `pl_name` FROM `smartukm_place` AS `pl`
-								JOIN `smartukm_rel_pl_k` AS `rel` ON (`rel`.`pl_id` = `pl`.`pl_id`)
-								JOIN `smartukm_kommune` AS `k` ON (`k`.`id` = `rel`.`k_id`)
-								WHERE `k`.`idfylke` = '#fylke'
-								AND `pl`.`season` = '#season'
-								GROUP BY `pl`.`pl_id`
-								ORDER BY `pl`.`pl_name`",
-								array('fylke'=>get_option('fylke'),
-									  'season'=>get_option('season')));
-		$monstringer = $monstringer->run();
-		if($monstringer)
-			while($r = SQL::fetch($monstringer)) {
-				$options[] = array('pl_id' => $r['pl_id'], 'name' => $r['pl_name']);
-			}
-	} else {
-		$options[] = array('pl_id' => get_option('pl_id'));
-	}
-	
 	require_once('UKM/ambassador.class.php');
+
+	$monstring = new monstring_v2( get_option('pl_id') );
+	$infos = [
+		'site_type' => get_option('site_type'),
+		'monstring' => $monstring,
+	];
+
+	if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+		if( !isset( $_POST['transfer'] ) ) {
+			$infos['message'] = [
+				'level' => 'danger',
+				'body' => 'Du må velge minst én ambassadør å overføre'
+			];
+		} else {
+			$transfer = $_POST['transfer'];
+
+			foreach( $transfer as $ambassador_id ) {
+				$monstring->reloadInnslag();
+				$person = null;
+				$innslag = null;
+				$ambassador = new ambassador( $ambassador_id );
+
+				require_once('UKM/kommune.class.php');
+				require_once('UKM/write_person.class.php');
+				require_once('UKM/write_innslag.class.php');
+				require_once('UKM/innslag_typer.class.php');
+				require_once('UKM/logger.class.php'); 
+				
+				// Sett opp logger
+				global $current_user;
+				get_currentuserinfo(); 
+				UKMlogger::setID( 'wordpress', $current_user->ID, get_option('pl_id') );
+				
+				// Finn valgt kommune
+				$kommune = new kommune( $_POST['kommune_'. $ambassador->getFacebookId() ] );
+
+				// Hent eksisterende person, eller opprett ny
+				// Ambassadør-systemet har nøyaktig fødselsdato, oppdater derfor herfra
+				$dob = DateTime::createFromFormat ( 'd/m/Y', $ambassador->birthday );
+				$person = write_person::create(
+					$ambassador->getFirstname(),
+					$ambassador->getLastname(),
+					$ambassador->getPhone(),
+					$dob->getTimestamp(),
+					$kommune->getId()
+				);
+
+				// Oppdater e-post hvis vi har den
+				if( !empty( $ambassador->getEmail() ) ) {
+					$person->setEpost( $ambassador->getEmail() );
+					write_person::save( $person );
+				}
+
+				// Opprett innslaget
+				$innslag = write_innslag::create(
+					$kommune,
+					$monstring,
+					innslag_typer::getByName('ressurs'),
+					$person->getNavn(),
+					$person
+				);
+
+				$innslag->getPersoner()->leggTil( $person );
+				
+				$person_med_context = $innslag->getPersoner()->get( $person->getId() );
+				$person_med_context->setRolle(['ambassador'=>'Ambassadør']);
+				write_person::save( $person_med_context );
+				write_innslag::savePersoner( $innslag );
+
+				$ambassador->deaktiver();
+				
+				$infos['overfort'][] = $innslag->getNavn();
+			}
+			echo TWIG('ambassador_overfort.html.twig', $infos , dirname(__FILE__));
+			return;
+		}
+	}
+
+	$options = array();
+	$options[] = array('pl_id' => get_option('pl_id'));
+	
 	if(isset($_GET['delete'])){
 		$amb = new ambassador( (int) $_GET['delete'] );
 		$res_del = $amb->delete();
 	}
 	
-	$infos = array('site_type' => get_option('site_type'),
-				   'ambassadorer' => $pl->ambassadorer(),
-				   'monstringer' => $options,
-				   'invites' => $send_status);
+	$pl = new monstring( get_option('pl_id') );
+	$infos['ambassadorer'] = $pl->ambassadorer();
+	$infos['monstringer'] = $options;
+	$infos['invites'] = $send_status;
+	
+	if( !is_array( $infos['ambassadorer'] ) || (is_array( $infos['ambassadorer'] ) && sizeof( $infos['ambassadorer'] ) == 0 ) ) {
+		update_option('ambassador_bye_bye', true);
+	} 
+
 	if(isset($_GET['delete'])){
 		$infos['deleted'] = $res_del;
 	}
 	echo TWIG('ambassador_mine.twig.html', $infos , dirname(__FILE__));
-}
-
-function UKMambassador_invite() {
-	$invites = explode(',', $_POST['ambassadorinvite']);
-	$invites = str_replace(' ', '', $invites);
-	
-	$send_status = array();
-	
-	if(isset($_POST['pl_invite_id']))
-		$plid = $_POST['pl_invite_id'];
-	else
-		$plid = get_option('pl_id');
-	
-	require_once('UKM/ambassador.class.php');
-	$ambassador = new ambassador(false);
-	
-	for($i=0; $i<sizeof($invites); $i++) {
-		$send_status[] = $ambassador->invite($invites[$i], $plid);
-	}
-	return $send_status;
 }

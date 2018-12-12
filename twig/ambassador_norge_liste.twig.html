@@ -1,9 +1,0 @@
-{% extends "norge_layout.twig.html" %}
-
-{% block content %}
-
-<p class="lead">Listen kan lastes ned som excel-fil</p>
-
-<a class="btn btn-primary" href="{{excel.link}}"><i class="icon-download-alt icon-white"></i> Last ned</a>
-(sist oppdatert: {{excel.created|date('d.m.Y H:i')}})
-{% endblock %}
