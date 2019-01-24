@@ -83,13 +83,18 @@ function UKMambassador() {
 				$kommune = new kommune( $_POST['kommune_'. $ambassador->getFacebookId() ] );
 
 				// Hent eksisterende person, eller opprett ny
-				// Ambassadør-systemet har nøyaktig fødselsdato, oppdater derfor herfra
-				$dob = DateTime::createFromFormat ( 'd/m/Y', $ambassador->birthday );
+                // Ambassadør-systemet har nøyaktig fødselsdato, oppdater derfor herfra
+                if( null == $ambassador->birthday || empty( $ambassador->birthday ) ) {
+                    $fodt = null;
+                } else {
+                    $dob = DateTime::createFromFormat ( 'd/m/Y', $ambassador->birthday );
+                    $fodt = $dob->getTimestamp();
+                }
 				$person = write_person::create(
 					$ambassador->getFirstname(),
 					$ambassador->getLastname(),
 					$ambassador->getPhone(),
-					$dob->getTimestamp(),
+					$fodt,
 					$kommune->getId()
 				);
 
