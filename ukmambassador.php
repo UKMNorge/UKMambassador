@@ -85,7 +85,7 @@ function UKMambassador() {
 				// Hent eksisterende person, eller opprett ny
                 // Ambassadør-systemet har nøyaktig fødselsdato, oppdater derfor herfra
                 if( null == $ambassador->birthday || empty( $ambassador->birthday ) ) {
-                    $fodt = null;
+                    $fodt = 0;
                 } else {
                     $dob = DateTime::createFromFormat ( 'd/m/Y', $ambassador->birthday );
                     $fodt = $dob->getTimestamp();
