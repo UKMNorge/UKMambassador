@@ -61,7 +61,7 @@
 						</select>
 					</td>
 				{% else %}
-					<input type="text" name="kommune_{{ambassador.faceID}}" value="{{ monstring.getKommune().getId() }}" />
+					<input type="hidden" name="kommune_{{ambassador.faceID}}" value="{{ monstring.getKommune().getId() }}" />
 				{% endif %}						
 				<td><img src="{{ambassador.image}}" class="pull-left img-circle" height="20" /></td>
 				<th>
